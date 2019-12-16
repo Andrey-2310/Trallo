@@ -1,16 +1,19 @@
-create table day(
-                    id bigint not null primary key,
-                    day_type varchar(255) not null,
-                    date_of_day date
+create sequence trallo_seq;
+
+create table section(
+                    id bigint primary key default nextval('trallo_seq'),
+                    section_order int,
+                    name varchar(2048)
 );
 
 create table note(
-                     id bigint not null primary key,
-                     day_id bigint not null,
-                     content varchar(2048),
+                     id bigint primary key default nextval('trallo_seq'),
+                     section_id bigint not null,
+                     note_order integer,
+                     description varchar(2048),
                      title varchar(2048)
 );
 
 alter table note
-    add constraint note_day_fk
-    foreign key (day_id) references day(id);
+    add constraint note_section_fk
+    foreign key (section_id) references section(id);
